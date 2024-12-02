@@ -21,6 +21,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.PolylineOptions
 
 class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var map: GoogleMap
@@ -65,6 +66,23 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         //map.mapType = GoogleMap.MAP_TYPE_SATELLITE
         ponerMarcador(LatLng(36.8532683, -2.4674304))
         gestionarLocalizacion()
+        // -----------------
+        ponerRuta()
+    }
+
+    private fun ponerRuta() {
+        val c1 = LatLng(36.850416, -2.464815)
+        val c2 = LatLng(36.852408, -2.468324)
+        val c3 = LatLng(36.848690, -2.461865)
+        val c4 = LatLng (36.849283, -2.462873)
+        val c5 = LatLng(36.850579, -2.464579)
+        // val c6 = c1
+        val polylineOptions = PolylineOptions()
+            // En vez de c6, c1 de nuevo
+            .add(c1, c2, c3, c4, c5, c1)
+            .width(15f)
+
+        val polyline = map.addPolyline(polylineOptions)
     }
 
     private fun gestionarLocalizacion() {
@@ -144,5 +162,12 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             4500,
             null
         )
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Para que indique que ya están concedidos los permisos
+    override fun onRestart() {
+        (super.onRestart())
+        gestionarLocalizacion()
     }
 }
